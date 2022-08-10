@@ -5,6 +5,7 @@ public class Percolation {
     private int vtop;
     private int vbottom;
     private WeightedQuickUnionUF wufGrid;
+    private WeightedQuickUnionUF wufFull;
     private int gridSize;
     private int opensites;
 
@@ -19,6 +20,7 @@ public class Percolation {
         vtop = gridSize * gridSize;
         vbottom = vtop + 1;
         wufGrid = new WeightedQuickUnionUF(gridSize*gridSize+2);
+        wufFull = new WeightedQuickUnionUF(gridSize*gridSize+1);
         opensites = 0;
     }
 
@@ -37,6 +39,7 @@ public class Percolation {
 
         if (row == 1) {
             wufGrid.union(vtop, gridSize*(row-1)+(col-1));
+            wufFull.union(vtop, gridSize*(row-1)+(col-1));
         }
         if (row == gridSize) {
             wufGrid.union(vbottom, gridSize*(row-1)+(col-1));
@@ -45,21 +48,25 @@ public class Percolation {
         // check top grid
         if (indexCheck(row-1, col) && isOpen(row-1, col)) {
             wufGrid.union(gridSize*(row-1)+(col-1), gridSize*(row-2)+(col-1));
+            wufFull.union(gridSize*(row-1)+(col-1), gridSize*(row-2)+(col-1));
         }
 
         // check bottom grid
         if (indexCheck(row+1, col) && isOpen(row+1, col)) {
             wufGrid.union(gridSize*(row-1)+(col-1), gridSize*row+(col-1));
+            wufFull.union(gridSize*(row-1)+(col-1), gridSize*row+(col-1));
         }
 
         // check left grid
         if (indexCheck(row, col-1) && isOpen(row, col-1)) {
             wufGrid.union(gridSize*(row-1)+(col-1), gridSize*(row-1)+(col-2));
+            wufFull.union(gridSize*(row-1)+(col-1), gridSize*(row-1)+(col-2));
         }
 
         // check right grid
         if (indexCheck(row, col+1) && isOpen(row, col+1)) {
             wufGrid.union(gridSize*(row-1)+(col-1), gridSize*(row-1)+col);
+            wufFull.union(gridSize*(row-1)+(col-1), gridSize*(row-1)+col);
         }
 
     }
@@ -74,7 +81,10 @@ public class Percolation {
 
     // is the site (row, col) full?
     public boolean isFull(int row, int col) {
-        return wufGrid.find(gridSize*(row-1)+(col-1)) == wufGrid.find(vtop);
+        if (!indexCheck(row, col)) {
+            indexError();
+        }
+        return wufFull.find(gridSize*(row-1)+(col-1)) == wufFull.find(vtop);
     }
 
     // return the number of open sites
