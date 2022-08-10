@@ -2,8 +2,8 @@ import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 
 public class Percolation {
     private boolean[][] grid;
-    final int vtop;
-    final int vbottom;
+    private int vtop;
+    private int vbottom;
     private WeightedQuickUnionUF wufGrid;
     private int gridSize;
     private int opensites;

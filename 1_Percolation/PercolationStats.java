@@ -2,9 +2,9 @@ import edu.princeton.cs.algs4.StdRandom;
 import edu.princeton.cs.algs4.StdStats;
 import edu.princeton.cs.algs4.StdOut;
 public class PercolationStats {
-    final double [] samples;
-    final int sampleNum;
-    final double CONFIDENCE_95 = 1.96;
+    private double [] samples;
+    private int sampleNum;
+    private double CONFIDENCE_95 = 1.96;
     private double sampleMean;
     private double sampleStd;
 
