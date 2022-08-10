@@ -1,10 +1,9 @@
-import edu.princeton.cs.algs4.StdOut;
 import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 
 public class Percolation {
     private boolean[][] grid;
-    private int vtop;
-    private int vbottom;
+    final int vtop;
+    final int vbottom;
     private WeightedQuickUnionUF wufGrid;
     private int gridSize;
     private int opensites;
@@ -12,7 +11,7 @@ public class Percolation {
 
     // creates n-by-n grid, with all sites initially blocked
     public Percolation(int n) {
-        if (n<=0) {
+        if (n <= 0) {
             throw new IllegalArgumentException("n should > 0");
         }
         gridSize = n;
@@ -36,10 +35,10 @@ public class Percolation {
         grid[row-1][col-1] = true;
         opensites++;
 
-        if (row==1) {
+        if (row == 1) {
             wufGrid.union(vtop, gridSize*(row-1)+(col-1));
         }
-        if (row==gridSize) {
+        if (row == gridSize) {
             wufGrid.union(vbottom, gridSize*(row-1)+(col-1));
         }
 
@@ -75,7 +74,7 @@ public class Percolation {
 
     // is the site (row, col) full?
     public boolean isFull(int row, int col) {
-        return wufGrid.find(gridSize*(row-1)+(col-1))==wufGrid.find(vtop);
+        return wufGrid.find(gridSize*(row-1)+(col-1)) == wufGrid.find(vtop);
     }
 
     // return the number of open sites
@@ -89,7 +88,7 @@ public class Percolation {
     }
 
     private boolean indexCheck(int row, int col) {
-        return (row>0 && row<=gridSize && col>0 && col<=gridSize);
+        return (row > 0 && row <= gridSize && col > 0 && col <= gridSize);
         
     }
 
@@ -98,7 +97,8 @@ public class Percolation {
     }
 
     // test client (optional)
-    public static void main(String[] args) {   
+    public static void main(String[] args) {
+        // Percolation are used for PercolationStats  
     }
 
 }
