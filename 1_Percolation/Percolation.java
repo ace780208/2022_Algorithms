@@ -88,12 +88,12 @@ public class Percolation {
         return wufGrid.find(vtop) == wufGrid.find(vbottom);
     }
 
-    public boolean indexCheck(int row, int col) {
+    private boolean indexCheck(int row, int col) {
         return (row>0 && row<=gridSize && col>0 && col<=gridSize);
         
     }
 
-    public void indexError() {
+    private void indexError() {
         throw new IllegalArgumentException("index is out of the range of gridSize");
     }
 

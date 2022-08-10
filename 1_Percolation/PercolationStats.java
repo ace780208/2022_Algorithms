@@ -3,10 +3,10 @@ import edu.princeton.cs.algs4.StdStats;
 import edu.princeton.cs.algs4.StdOut;
 import java.lang.Math;
 public class PercolationStats {
-    public double [] samples;
-    public int sampleNum;
-    public double sampleMean;
-    public double sampleStd;
+    private double [] samples;
+    private int sampleNum;
+    private double sampleMean;
+    private double sampleStd;
     // perform independent trials on an n-by-n grid
     public PercolationStats(int n, int trials) {
         if (n <= 0 || trials <= 0) {
@@ -23,7 +23,7 @@ public class PercolationStats {
                 int val = perm[i];
                 int tmp_row = val/n + 1;
                 int tmp_col = val%n + 1;
-                if ((!perc.isOpen(tmp_row, tmp_col)) && perc.indexCheck(tmp_row, tmp_col)) {
+                if ((!perc.isOpen(tmp_row, tmp_col))) {
                     perc.open(tmp_row, tmp_col);
                 }                
                 
