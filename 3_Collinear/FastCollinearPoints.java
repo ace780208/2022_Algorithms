@@ -1,5 +1,4 @@
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.ArrayList;
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.StdDraw;
@@ -15,13 +14,14 @@ public class FastCollinearPoints {
             {
                 if (points[i] == null) throw new IllegalArgumentException("point is null");
             }
+        // avoid mutate input points
         Point[] tmppoints = points.clone();
         Arrays.sort(tmppoints);
         if (points.length > 1)
         {   
             for (int i = 1; i < tmppoints.length; i++)
             {
-                if(tmppoints[i].compareTo(tmppoints[i-1]) == 0) throw new IllegalArgumentException("found duplicate points");
+                if (tmppoints[i].compareTo(tmppoints[i-1]) == 0) throw new IllegalArgumentException("found duplicate points");
             }
         }
 
@@ -30,6 +30,7 @@ public class FastCollinearPoints {
         Point[] tmppoints2 = tmppoints.clone();
         for (Point p : tmppoints)
         {
+            // sort points based on current point's slope to find line segments with the same slope
             Arrays.sort(tmppoints2, p.slopeOrder());
 
             ArrayList<Point> collinearPoints = new ArrayList<Point>();
@@ -44,8 +45,9 @@ public class FastCollinearPoints {
                 {
                     if (collinearPoints.size() > 3)
                     {
-                      collinearPoints.sort(null);
-                      if (p.compareTo(collinearPoints.get(0)) == 0) segments.add(new LineSegment(p, collinearPoints.get(collinearPoints.size()-1)));
+                        // sort points to only include line with max line segment and avoid duplicate from other p comparison
+                        collinearPoints.sort(null);
+                        if (p.compareTo(collinearPoints.get(0)) == 0) segments.add(new LineSegment(p, collinearPoints.get(collinearPoints.size()-1)));
                     }
                     slope = tmpSlope;
                     collinearPoints = new ArrayList<Point>();
@@ -53,10 +55,12 @@ public class FastCollinearPoints {
                 } 
                 else
                 {
+                    // include the last point when there is only one point in collinearPoints
                     if (collinearPoints.size() == 1) collinearPoints.add(tmppoints2[j-1]);
                     collinearPoints.add(tmppoints2[j]);
                 }
             }
+            // handle points on the same line when reaching the end of tmppoint2s
             if (collinearPoints.size() > 3)
             {
                 collinearPoints.sort(null);

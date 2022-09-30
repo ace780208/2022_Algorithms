@@ -136,7 +136,7 @@ public class Point implements Comparable<Point> {
     
         Point[] points = {point2, point3, point4};
         Arrays.sort(points, point1.slopeOrder());
-        for (int i=0; i<points.length; i++)
+        for (int i = 0; i < points.length; i++)
         {
             StdOut.println("Slope order point: " + points[i]);
         }

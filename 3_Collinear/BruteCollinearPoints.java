@@ -15,11 +15,12 @@ public class BruteCollinearPoints {
             {
                 if (points[i] == null) throw new IllegalArgumentException("point is null");
             }
+        // avoid mutate input points
         Point[] tmppoints = points.clone();
         Arrays.sort(tmppoints);     
         for (int i = 1; i < tmppoints.length; i++)
         {
-            if(tmppoints[i].compareTo(tmppoints[i-1]) == 0) throw new IllegalArgumentException("found duplicate points");
+            if (tmppoints[i].compareTo(tmppoints[i-1]) == 0) throw new IllegalArgumentException("found duplicate points");
         }
         
         if (tmppoints.length < 4) return; 
@@ -32,10 +33,10 @@ public class BruteCollinearPoints {
                 for (int k = j + 1; k < points.length - 1; k++)
                 {
                     Point r = tmppoints[k];
-                    for (int l = k + 1; l < points.length; l++)
+                    for (int m = k + 1; m < points.length; m++)
                     {
-                        Point s = tmppoints[l];
-                        if (p.slopeTo(q)==p.slopeTo(r) && p.slopeTo(r)==p.slopeTo(s) && p.slopeTo(q)==p.slopeTo(s))
+                        Point s = tmppoints[m];
+                        if (p.slopeTo(q) == p.slopeTo(r) && p.slopeTo(r) == p.slopeTo(s) && p.slopeTo(q) == p.slopeTo(s))
                         {
                             segments.add(new LineSegment(p, s));
                         }
